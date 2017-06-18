@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h3 #[a(href='/') Back to Index]
+
+  h3 Users
+  form(role='form', action="/spots/assign",method="post")
+    select(name='username', class='btn btn-primary dropdown-toggle', type='button')
+      each user in users
+        option(value='#{user.username}') #{user.realname}
+    &nbsp;
+    select(name='number', class='btn btn-primary dropdown-toggle', type='button')
+      each spot in spots
+        option(value='#{spot.number}') #{spot.number}
+    &nbsp
+    button.btn.btn-default(type='submit') Assign
+    
+  h3 Spots
+  form(role='form', action="/spots/assign",method="post")
+    select(name='number', class='btn btn-primary dropdown-toggle', type='button')
+      each spot in spots
+        if spot.user
+          option(value='#{spot.number}') #{spot.number} - (#{spot.user.realname})
+        else
+          option(value='#{spot.number}') #{spot.number}
+    &nbsp;
+    button.btn.btn-default(type='submit') Release

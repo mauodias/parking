@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  if user.role > 0
+    if !user.subscribed
+      h3 #[a(href='/users/subscribe') Subscribe!] | #[a(href='/admin/') Admin] |  #[a(href='/users/logout') Logout]
+    else
+      h3 #[a(href='/users/unsubscribe') Unsubscribe!] | #[a(href='/admin/') Admin] | #[a(href='/users/logout') Logout]
+  else
+    if !user.subscribed
+      h3 #[a(href='/users/subscribe') Subscribe!] | #[a(href='/users/logout') Logout]
+    else
+      h3 #[a(href='/users/unsubscribe') Unsubscribe!] | #[a(href='/users/logout') Logout]
+  
+  -if (user.role > 0) {
+    br
+    br
+    form(role='form', action="/spots/new",method="post", style='max-width: 500px;')
+        .form-group
+            input.form-control(type='text', name="number", placeholder='Number')
+            br
+            input.form-control(type='text', name="floor", placeholder='Floor')
+            br
+            button.btn.btn-default(type='submit') Add New Spot
+  -}
+    br
+    br
+    table.table.table-striped
+      thead
+        tr
+          th.col-md-2 #
+          th.col-md-2 Floor
+          th.col-md-2 Owner
+      tbody
+        each spot in spots
+          tr
+            td #{spot.number}
+            td #{spot.floor}
+            if spot.user
+              td #{spot.user.realname}
+            else
+              td -
