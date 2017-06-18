@@ -11,7 +11,7 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
-    User.register(new User({ username : req.body.username, realname: req.body.realname, role: 2 }), req.body.password, function(err, user) {
+    User.register(new User({ username : req.body.username, realname: req.body.realname }), req.body.password, function(err, user) {
         if (err) {
           return res.render('new', { error : err.message, new: true });
         }
